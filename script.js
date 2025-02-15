@@ -2,7 +2,6 @@ const map = L.map('map', {
     zoomControl: false  
 }).setView([16.0474, 108.2062], 5); 
 
-
 // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 // }).addTo(map);
@@ -31,13 +30,24 @@ function highlightFeature(e) {
         fillColor: '#264653',
         fillOpacity: 0.7
     });
+    
+    // Show tooltip
+    layer.openTooltip();
 }
 
 function resetHighlight(e) {
     geojsonLayer.resetStyle(e.target);
+    // Hide tooltip
+    e.target.closeTooltip();
 }
 
 function onEachFeature(feature, layer) {
+    // Bind tooltip with welcome message
+    layer.bindTooltip(`Welcome to ${feature.properties.Name}`, {
+        permanent: false,
+        direction: 'top'
+    });
+
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
@@ -45,8 +55,6 @@ function onEachFeature(feature, layer) {
             map.fitBounds(e.target.getBounds());
         }
     });
-
-    layer.bindPopup(`Welcome to ${feature.properties.Name}`);
 }
 
 let geojsonLayer;
@@ -75,7 +83,6 @@ fetch('data/Vietnam_provinces.geojson')
                     );
                     if (layer) {
                         map.fitBounds(layer.getBounds());
-                        layer.openPopup();
                     }
                 });
                 
