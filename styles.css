@@ -105,14 +105,23 @@ th {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.province {
+.leaflet-popup-content {
+    font-size: 14px;
+    padding: 8px;
+}
+
+.leaflet-container {
+    background: #f8f9fa;
+}
+
+.province-layer {
     fill: #2a9d8f;
     stroke: #fff;
-    stroke-width: 1px;
+    stroke-width: 1;
     transition: fill 0.2s;
 }
 
-.province:hover {
+.province-layer:hover {
     fill: #264653;
     cursor: pointer;
 }
