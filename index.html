@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnam Provinces Map</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Provinces Data</h2>
+            <div class="table-container">
+                <table id="provinces-table">
+                    <thead>
+                        <tr>
+                            <th>Province Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="provinces-body">
+                        <!-- Province data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="right-panel">
+            <h2>Vietnam Map</h2>
+            <div class="map-container">
+                <div id="map">
+                    <!-- Map will be rendered here -->
+                </div>
+                <div class="zoom-controls">
+                    <button id="zoom-in">+</button>
+                    <button id="zoom-out">-</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
