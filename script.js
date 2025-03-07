@@ -74,13 +74,60 @@ function resetHighlight(e) {
     e.target.closeTooltip();
 }
 
+function getFDIForProvince(provinceName) {
+    if (!selectedYear) return null;
+    
+    const provinceData = fdiData.find(d => 
+        d.Province.trim() === provinceName.trim() && 
+        d.Year === selectedYear.toString()
+    );
+    
+    return provinceData ? parseFloat(provinceData.FDI) : null;
+}
+
+function getPercentageChange(provinceName) {
+    if (!selectedYear || selectedYear === '2015') {
+        return 0; 
+    }
+    
+    const currentFDI = getFDIForProvince(provinceName);
+    if (currentFDI === null) return null;
+    
+    const prevYear = (parseInt(selectedYear) - 1).toString();
+    
+    const prevProvinceData = fdiData.find(d => 
+        d.Province.trim() === provinceName.trim() && 
+        d.Year === prevYear
+    );
+    
+    if (!prevProvinceData) return null;
+    
+    const prevFDI = parseFloat(prevProvinceData.FDI);
+    if (isNaN(prevFDI) || prevFDI === null || prevFDI === 0) return null;
+    
+    return ((currentFDI - prevFDI) / Math.abs(prevFDI)) * 100;
+}
+
 function onEachFeature(feature, layer) {
     const provinceName = feature.properties.Name;
     const fdi = getFDIForProvince(provinceName);
+    const percentChange = getPercentageChange(provinceName);
     
-    const tooltipContent = fdi !== null 
-        ? `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD` 
-        : `${provinceName}<br>No FDI data available`;
+    let tooltipContent = '';
+    
+    if (fdi !== null) {
+        tooltipContent = `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD`;
+        
+        if (percentChange !== null) {
+            const changeSymbol = percentChange >= 0 ? '↑' : '↓';
+            const changeColor = percentChange >= 0 ? 'green' : 'red';
+            tooltipContent += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
+        } else {
+            tooltipContent += `<br>Change: N/A`;
+        }
+    } else {
+        tooltipContent = `${provinceName}<br>No FDI data available`;
+    }
     
     layer.bindTooltip(tooltipContent, {
         permanent: false,
@@ -96,17 +143,6 @@ function onEachFeature(feature, layer) {
     });
 }
 
-function getFDIForProvince(provinceName) {
-    if (!selectedYear) return null;
-    
-    const provinceData = fdiData.find(d => 
-        d.Province.trim() === provinceName.trim() && 
-        d.Year === selectedYear.toString()
-    );
-    
-    return provinceData ? parseFloat(provinceData.FDI) : null;
-}
-
 function updateMap() {
     if (!geojsonLayer || !selectedYear) return;
     
@@ -115,10 +151,23 @@ function updateMap() {
         
         const provinceName = layer.feature.properties.Name;
         const fdi = getFDIForProvince(provinceName);
+        const percentChange = getPercentageChange(provinceName);
         
-        const tooltipContent = fdi !== null 
-            ? `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD` 
-            : `${provinceName}<br>No FDI data available`;
+        let tooltipContent = '';
+        
+        if (fdi !== null) {
+            tooltipContent = `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD`;
+            
+            if (percentChange !== null) {
+                const changeSymbol = percentChange >= 0 ? '↑' : '↓';
+                const changeColor = percentChange >= 0 ? 'green' : 'red';
+                tooltipContent += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
+            } else {
+                tooltipContent += `<br>Change: N/A`;
+            }
+        } else {
+            tooltipContent = `${provinceName}<br>No FDI data available`;
+        }
         
         layer.unbindTooltip();
         layer.bindTooltip(tooltipContent, {
