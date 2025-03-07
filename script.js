@@ -1,6 +1,6 @@
 const map = L.map('map', {
     zoomControl: false  
-}).setView([16.0474, 108.2062], 5); 
+}).setView([16.0474, 108.2062], 7); // Further increased zoom level from 6 to 7
 
 // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -59,6 +59,7 @@ function onEachFeature(feature, layer) {
 
 let geojsonLayer;
 
+// Load the GeoJSON data for the map
 fetch('data/Vietnam_provinces.geojson')
     .then(response => response.json())
     .then(data => {
@@ -68,34 +69,29 @@ fetch('data/Vietnam_provinces.geojson')
         }).addTo(map);
 
         map.fitBounds(geojsonLayer.getBounds());
-
-        const tableBody = document.getElementById('provinces-body');
-        data.features
-            .sort((a, b) => a.properties.Name.localeCompare(b.properties.Name))
-            .forEach(feature => {
-                const row = document.createElement('tr');
-                const cell = document.createElement('td');
-                cell.textContent = feature.properties.Name;
-                
-                row.addEventListener('click', () => {
-                    const layer = geojsonLayer.getLayers().find(layer => 
-                        layer.feature.properties.Name === feature.properties.Name
-                    );
-                    if (layer) {
-                        map.fitBounds(layer.getBounds());
-                    }
-                });
-                
-                row.appendChild(cell);
-                tableBody.appendChild(row);
-            });
     })
     .catch(error => {
         console.error('Error loading the GeoJSON file:', error);
     });
 
-document.querySelectorAll('#provinces-body tr').forEach(row => {
-    row.style.cursor = 'pointer';
+// Populate the dropdown with years from 2015 to 2024
+const yearDropdown = document.getElementById('year-dropdown');
+for (let year = 2015; year <= 2024; year++) {
+    const option = document.createElement('option');
+    option.value = year;
+    option.textContent = year;
+    yearDropdown.appendChild(option);
+}
+
+// Add event listener to the dropdown
+yearDropdown.addEventListener('change', (event) => {
+    const selectedYear = event.target.value;
+    console.log(`Year ${selectedYear} selected`);
+    
+    // Reset the map view to show all of Vietnam
+    if (geojsonLayer) {
+        map.fitBounds(geojsonLayer.getBounds());
+    }
 });
 
 window.addEventListener('resize', () => {
