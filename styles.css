@@ -144,3 +144,42 @@ h2 {
     fill: #264653;
     cursor: pointer;
 }
+
+/* Legend Styles */
+.info.legend {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    line-height: 1.5;
+    max-height: 400px;
+    overflow-y: auto;
+    min-width: 180px;
+}
+
+.info.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+    display: inline-block;
+}
+
+.info.legend strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.legend-section {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+}
+
+.legend-section strong {
+    color: #555;
+    font-size: 12px;
+}
