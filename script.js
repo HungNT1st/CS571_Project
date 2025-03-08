@@ -2,9 +2,185 @@ let fdiData = [];
 let geojsonLayer;
 let selectedYear = null;
 
+const vietnamRegionsEnglish = {
+  "Red River Delta": [
+    "Ha Noi",
+    "Vinh Phuc",
+    "Bac Ninh",
+    "Quang Ninh",
+    "Hai Duong",
+    "Hai Phong",
+    "Hung Yen",
+    "Thai Binh",
+    "Ha Nam",
+    "Nam Dinh",
+    "Ninh Binh"
+  ],
+  "Northern Midlands and Mountainous Region": [
+    "Ha Giang",
+    "Cao Bang",
+    "Bac Kan",
+    "Tuyen Quang",
+    "Lao Cai",
+    "Yen Bai",
+    "Thai Nguyen",
+    "Lang Son",
+    "Bac Giang",
+    "Phu Tho",
+    "Dien Bien",
+    "Lai Chau",
+    "Son La",
+    "Hoa Binh"
+  ],
+  "North Central and Central Coastal Region": [
+    "Thanh Hoa",
+    "Nghe An",
+    "Ha Tinh",
+    "Quang Binh",
+    "Quang Tri",
+    "Thua Thien Hue",
+    "Da Nang",
+    "Quang Nam",
+    "Quang Ngai",
+    "Binh Dinh",
+    "Phu Yen",
+    "Khanh Hoa",
+    "Ninh Thuan",
+    "Binh Thuan"
+  ],
+  "Central Highlands": [
+    "Kon Tum",
+    "Gia Lai",
+    "Dak Lak",
+    "Dak Nong",
+    "Lam Dong"
+  ],
+  "Southeast": [
+    "Binh Phuoc",
+    "Tay Ninh",
+    "Binh Duong",
+    "Dong Nai",
+    "Ba Ria - Vung Tau",
+    "Ho Chi Minh"
+  ],
+  "Mekong Delta": [
+    "Long An",
+    "Tien Giang",
+    "Ben Tre",
+    "Tra Vinh",
+    "Vinh Long",
+    "Dong Thap",
+    "An Giang",
+    "Kien Giang",
+    "Can Tho",
+    "Hau Giang",
+    "Soc Trang",
+    "Bac Lieu",
+    "Ca Mau"
+  ]
+};
+
+function findRegionForProvince(provinceName) {
+  for (const [region, provinces] of Object.entries(vietnamRegionsEnglish)) {
+    if (provinces.includes(provinceName)) {
+      return region;
+    }
+  }
+  return null;
+}
+
+function getFDIDataForRegion(region) {
+  if (!region || !selectedYear) return [];
+  
+  const provinces = vietnamRegionsEnglish[region] || [];
+  const regionData = [];
+  
+  for (const province of provinces) {
+    const fdi = getFDIForProvince(province);
+    regionData.push({
+      province: province,
+      fdi: fdi !== null ? fdi : 0
+    });
+  }
+  
+  return regionData;
+}
+
+function createRegionalBarChart(container, region, highlightedProvince) {
+  d3.select(container).html("");
+  
+  const regionData = getFDIDataForRegion(region);
+  if (regionData.length === 0) return;
+  
+  regionData.sort((a, b) => b.fdi - a.fdi);
+  
+  const margin = { top: 20, right: 15, bottom: 60, left: 30 };
+  const width = 300 - margin.left - margin.right;
+  const height = 180 - margin.top - margin.bottom;
+  
+  const svg = d3.select(container)
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+  
+  svg.append("text")
+    .attr("class", "chart-title")
+    .attr("x", width / 2)
+    .attr("y", -10)
+    .attr("text-anchor", "middle")
+    .text(region);
+  
+  const x = d3.scaleBand()
+    .domain(regionData.map(d => d.province))
+    .range([0, width])
+    .padding(0.2);
+  
+  const y = d3.scaleLinear()
+    .domain([0, d3.max(regionData, d => d.fdi) * 1.1])
+    .range([height, 0]);
+  
+  svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0,${height})`)
+    .call(d3.axisBottom(x))
+    .selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end")
+    .style("font-size", "8px");
+  
+  svg.append("g")
+    .attr("class", "y-axis")
+    .call(d3.axisLeft(y))
+    .selectAll("text")
+    .style("font-size", "8px");
+  
+  svg.selectAll(".bar")
+    .data(regionData)
+    .enter()
+    .append("rect")
+    .attr("class", d => d.province === highlightedProvince ? "bar highlighted" : "bar")
+    .attr("x", d => x(d.province))
+    .attr("width", x.bandwidth())
+    .attr("y", d => y(d.fdi))
+    .attr("height", d => height - y(d.fdi));
+  
+  svg.selectAll(".label")
+    .data(regionData)
+    .enter()
+    .append("text")
+    .attr("class", "bar-label")
+    .attr("x", d => x(d.province) + x.bandwidth() / 2)
+    .attr("y", d => y(d.fdi) - 3)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "6px")
+    .text(d => d.fdi.toFixed(0));
+}
+
 const map = L.map('map', {
     zoomControl: false  
-}).setView([16.0474, 108.2062], 7); // Further increased zoom level from 6 to 7
+}).setView([16.0474, 108.2062], 7);
 
 // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -18,7 +194,6 @@ document.getElementById('zoom-out').addEventListener('click', () => {
     map.zoomOut();
 });
 
-// Change the color scheme based on the FDI value
 function getColor(fdi) {
     if (isNaN(fdi) || fdi === null) {
         return '#ffcccc'; 
@@ -66,11 +241,43 @@ function highlightFeature(e) {
         fillOpacity: 0.7
     });
     
-    layer.openTooltip();
+    const provinceName = layer.feature.properties.Name;
+    const region = findRegionForProvince(provinceName);
+    
+    if (region) {
+        const popupContent = document.createElement('div');
+        popupContent.className = 'popup-content';
+        
+        const fdi = getFDIForProvince(provinceName);
+        const infoDiv = document.createElement('div');
+        infoDiv.innerHTML = `<strong>${provinceName}</strong><br>FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD`;
+        popupContent.appendChild(infoDiv);
+        
+        const chartContainer = document.createElement('div');
+        chartContainer.className = 'chart-container';
+        popupContent.appendChild(chartContainer);
+        
+        if (layer._popup) {
+            layer.unbindPopup();
+        }
+        
+        layer.bindPopup(popupContent, {
+            className: 'custom-popup',
+            maxWidth: 400,
+            offset: new L.Point(-100, 0) 
+        }).openPopup();
+        
+        setTimeout(() => {
+            createRegionalBarChart(chartContainer, region, provinceName);
+        }, 10);
+    } else {
+        layer.openTooltip();
+    }
 }
 
 function resetHighlight(e) {
     geojsonLayer.resetStyle(e.target);
+    e.target.closePopup();
     e.target.closeTooltip();
 }
 
@@ -152,6 +359,7 @@ function updateMap() {
         const provinceName = layer.feature.properties.Name;
         const fdi = getFDIForProvince(provinceName);
         const percentChange = getPercentageChange(provinceName);
+        const region = findRegionForProvince(provinceName);
         
         let tooltipContent = '';
         
@@ -174,6 +382,28 @@ function updateMap() {
             permanent: false,
             direction: 'top'
         });
+        
+        if (layer.getPopup()) {
+            const popupContent = document.createElement('div');
+            popupContent.className = 'popup-content';
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.innerHTML = `<strong>${provinceName}</strong><br>FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD`;
+            popupContent.appendChild(infoDiv);
+            
+            const chartContainer = document.createElement('div');
+            chartContainer.className = 'chart-container';
+            popupContent.appendChild(chartContainer);
+            
+            layer.setPopupContent(popupContent);
+            layer.getPopup().options.offset = new L.Point(-100, 0);
+            
+            if (layer.getPopup().isOpen() && region) {
+                setTimeout(() => {
+                    createRegionalBarChart(chartContainer, region, provinceName);
+                }, 10);
+            }
+        }
     });
 }
 
