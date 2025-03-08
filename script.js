@@ -1,6 +1,7 @@
 let fdiData = [];
 let geojsonLayer;
 let selectedYear = null;
+let nationalFdiData = []; 
 
 const vietnamRegionsEnglish = {
   "Red River Delta": [
@@ -234,7 +235,6 @@ function style(feature) {
     };
 }
 
-// Function to add region borders
 function addRegionBorders() {
     const regionBorderColor = '#264653';
     const regionBorderWeight = 0.5;
@@ -474,6 +474,133 @@ function updateMap() {
     });
 }
 
+function calculateNationalFDI() {
+    const years = [...new Set(fdiData.map(d => d.Year))].sort();
+    
+    nationalFdiData = years.map(year => {
+        const yearData = fdiData.filter(d => d.Year === year);
+        const totalFDI = yearData.reduce((sum, entry) => {
+            const fdi = parseFloat(entry.FDI);
+            return sum + (isNaN(fdi) ? 0 : fdi);
+        }, 0);
+        
+        return {
+            year: year,
+            totalFDI: totalFDI
+        };
+    });
+    
+    console.log('National FDI data calculated:', nationalFdiData);
+    createNationalFDIChart();
+}
+
+function createNationalFDIChart() {
+    const container = document.getElementById('line-chart-container');
+    d3.select(container).html("");
+    
+    if (nationalFdiData.length === 0) return;
+    
+    const margin = { top: 40, right: 50, bottom: 60, left: 80 };
+    const width = container.clientWidth - margin.left - margin.right;
+    const height = container.clientHeight - margin.top - margin.bottom;
+    
+    const svg = d3.select(container)
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+    
+    svg.append("text")
+        .attr("class", "chart-title")
+        .attr("x", width / 2)
+        .attr("y", -20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "18px")
+        .text("Vietnam National FDI Trend (2015-2024)");
+    
+    const years = nationalFdiData.map(d => d.year);
+    
+    const x = d3.scalePoint()
+        .domain(years)
+        .range([0, width])
+        .padding(0.5); 
+    
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(nationalFdiData, d => d.totalFDI) * 1.1])
+        .range([height, 0]);
+    
+    svg.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("font-size", "12px");
+    
+    svg.append("g")
+        .attr("class", "y-axis")
+        .call(d3.axisLeft(y).tickFormat(d => d.toLocaleString()))
+        .selectAll("text")
+        .style("font-size", "12px");
+    
+    svg.append("text")
+        .attr("class", "axis-label")
+        .attr("x", width / 2)
+        .attr("y", height + 40)
+        .attr("text-anchor", "middle")
+        .text("Year");
+    
+    svg.append("text")
+        .attr("class", "axis-label")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", -60)
+        .attr("text-anchor", "middle")
+        .text("Total FDI (million USD)");
+    
+    const line = d3.line()
+        .x(d => x(d.year))
+        .y(d => y(d.totalFDI))
+        .curve(d3.curveMonotoneX);
+    
+    svg.append("path")
+        .datum(nationalFdiData)
+        .attr("class", "line-path")
+        .attr("d", line);
+    
+    svg.selectAll(".data-point")
+        .data(nationalFdiData)
+        .enter()
+        .append("circle")
+        .attr("class", "data-point")
+        .attr("cx", d => x(d.year))
+        .attr("cy", d => y(d.totalFDI))
+        .attr("r", d => d.year === selectedYear ? 8 : 6)
+        .style("fill", d => d.year === selectedYear ? '#e76f51' : '#264653');
+    
+    svg.selectAll(".data-label")
+        .data(nationalFdiData)
+        .enter()
+        .append("text")
+        .attr("class", "data-label")
+        .attr("x", d => x(d.year))
+        .attr("y", d => y(d.totalFDI) - 15)
+        .text(d => d.totalFDI.toLocaleString())
+        .style("font-size", "12px")
+        .attr("text-anchor", "middle");
+    
+    svg.selectAll("line.horizontal-grid")
+        .data(y.ticks())
+        .enter()
+        .append("line")
+        .attr("class", "axis-line")
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", d => y(d))
+        .attr("y2", d => y(d))
+        .style("stroke-dasharray", "3,3");
+}
+
 fetch('data/extracted_data.csv')
     .then(response => response.text())
     .then(csvText => {
@@ -492,6 +619,8 @@ fetch('data/extracted_data.csv')
         }
         
         console.log('FDI data loaded:', fdiData.length, 'entries');
+        
+        calculateNationalFDI();
         
         return fetch('data/Vietnam_provinces.geojson');
     })
@@ -547,10 +676,31 @@ yearDropdown.addEventListener('change', (event) => {
         }
         addRegionBorders();
     }
+    
+    updateLineChartHighlight();
 });
+
+function updateLineChartHighlight() {
+    const container = document.getElementById('line-chart-container');
+    const svg = d3.select(container).select('svg g');
+    
+    if (!svg.empty() && selectedYear) {
+        svg.selectAll('.data-point').attr('r', 6).style('fill', '#264653');
+        
+        svg.selectAll('.data-point')
+            .filter(d => d.year === selectedYear)
+            .attr('r', 8)
+            .style('fill', '#e76f51');
+    }
+}
 
 window.addEventListener('resize', () => {
     map.invalidateSize();
+    
+    if (nationalFdiData.length > 0) {
+        createNationalFDIChart();
+        updateLineChartHighlight();
+    }
 });
 
 function addLegend() {
