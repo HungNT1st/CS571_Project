@@ -234,6 +234,48 @@ function style(feature) {
     };
 }
 
+// Function to add region borders
+function addRegionBorders() {
+    const regionBorderColor = '#264653';
+    const regionBorderWeight = 0.5;
+    const regionBorderOpacity = 0.7;
+    
+    const regionLayers = [];
+    
+    Object.entries(vietnamRegionsEnglish).forEach(([regionName, provinces]) => {
+        const regionFeatures = [];
+        
+        geojsonLayer.eachLayer(layer => {
+            const provinceName = layer.feature.properties.Name;
+            if (provinces.includes(provinceName)) {
+                const clonedFeature = JSON.parse(JSON.stringify(layer.feature));
+                regionFeatures.push(clonedFeature);
+            }
+        });
+        
+        if (regionFeatures.length > 0) {
+            const regionGeoJSON = {
+                type: 'FeatureCollection',
+                features: regionFeatures
+            };
+            
+            const regionLayer = L.geoJSON(regionGeoJSON, {
+                style: {
+                    color: regionBorderColor,
+                    weight: regionBorderWeight,
+                    opacity: regionBorderOpacity,
+                    fillOpacity: 0,
+                    fill: false
+                }
+            }).addTo(map);
+            
+            regionLayers.push(regionLayer);
+        }
+    });
+    
+    map.regionLayers = regionLayers;
+}
+
 function highlightFeature(e) {
     const layer = e.target;
     layer.setStyle({
@@ -249,8 +291,20 @@ function highlightFeature(e) {
         popupContent.className = 'popup-content';
         
         const fdi = getFDIForProvince(provinceName);
+        const percentChange = getPercentageChange(provinceName);
+        
+        let infoHTML = `<strong>${provinceName}</strong><br>FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD`;
+        
+        if (percentChange !== null) {
+            const changeSymbol = percentChange >= 0 ? '↑' : '↓';
+            const changeColor = percentChange >= 0 ? 'green' : 'red';
+            infoHTML += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
+        } else if (selectedYear !== '2015') {
+            infoHTML += `<br>Change: N/A`;
+        }
+        
         const infoDiv = document.createElement('div');
-        infoDiv.innerHTML = `<strong>${provinceName}</strong><br>FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD`;
+        infoDiv.innerHTML = infoHTML;
         popupContent.appendChild(infoDiv);
         
         const chartContainer = document.createElement('div');
@@ -263,15 +317,12 @@ function highlightFeature(e) {
         
         layer.bindPopup(popupContent, {
             className: 'custom-popup',
-            maxWidth: 400,
-            offset: new L.Point(-100, 0) 
+            maxWidth: 400
         }).openPopup();
         
         setTimeout(() => {
             createRegionalBarChart(chartContainer, region, provinceName);
         }, 10);
-    } else {
-        layer.openTooltip();
     }
 }
 
@@ -320,26 +371,30 @@ function onEachFeature(feature, layer) {
     const fdi = getFDIForProvince(provinceName);
     const percentChange = getPercentageChange(provinceName);
     
-    let tooltipContent = '';
+    const region = findRegionForProvince(provinceName);
     
-    if (fdi !== null) {
-        tooltipContent = `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD`;
+    if (!region) {
+        let tooltipContent = '';
         
-        if (percentChange !== null) {
-            const changeSymbol = percentChange >= 0 ? '↑' : '↓';
-            const changeColor = percentChange >= 0 ? 'green' : 'red';
-            tooltipContent += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
+        if (fdi !== null) {
+            tooltipContent = `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD`;
+            
+            if (percentChange !== null) {
+                const changeSymbol = percentChange >= 0 ? '↑' : '↓';
+                const changeColor = percentChange >= 0 ? 'green' : 'red';
+                tooltipContent += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
+            } else {
+                tooltipContent += `<br>Change: N/A`;
+            }
         } else {
-            tooltipContent += `<br>Change: N/A`;
+            tooltipContent = `${provinceName}<br>No FDI data available`;
         }
-    } else {
-        tooltipContent = `${provinceName}<br>No FDI data available`;
+        
+        layer.bindTooltip(tooltipContent, {
+            permanent: false,
+            direction: 'top'
+        });
     }
-    
-    layer.bindTooltip(tooltipContent, {
-        permanent: false,
-        direction: 'top'
-    });
 
     layer.on({
         mouseover: highlightFeature,
@@ -361,34 +416,47 @@ function updateMap() {
         const percentChange = getPercentageChange(provinceName);
         const region = findRegionForProvince(provinceName);
         
-        let tooltipContent = '';
-        
-        if (fdi !== null) {
-            tooltipContent = `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD`;
-            
-            if (percentChange !== null) {
-                const changeSymbol = percentChange >= 0 ? '↑' : '↓';
-                const changeColor = percentChange >= 0 ? 'green' : 'red';
-                tooltipContent += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
-            } else {
-                tooltipContent += `<br>Change: N/A`;
-            }
-        } else {
-            tooltipContent = `${provinceName}<br>No FDI data available`;
-        }
-        
         layer.unbindTooltip();
-        layer.bindTooltip(tooltipContent, {
-            permanent: false,
-            direction: 'top'
-        });
+        
+        if (!region) {
+            let tooltipContent = '';
+            
+            if (fdi !== null) {
+                tooltipContent = `${provinceName}<br>FDI: ${fdi.toLocaleString()} million USD`;
+                
+                if (percentChange !== null) {
+                    const changeSymbol = percentChange >= 0 ? '↑' : '↓';
+                    const changeColor = percentChange >= 0 ? 'green' : 'red';
+                    tooltipContent += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
+                } else {
+                    tooltipContent += `<br>Change: N/A`;
+                }
+            } else {
+                tooltipContent = `${provinceName}<br>No FDI data available`;
+            }
+            
+            layer.bindTooltip(tooltipContent, {
+                permanent: false,
+                direction: 'top'
+            });
+        }
         
         if (layer.getPopup()) {
             const popupContent = document.createElement('div');
             popupContent.className = 'popup-content';
             
+            let infoHTML = `<strong>${provinceName}</strong><br>FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD`;
+            
+            if (percentChange !== null) {
+                const changeSymbol = percentChange >= 0 ? '↑' : '↓';
+                const changeColor = percentChange >= 0 ? 'green' : 'red';
+                infoHTML += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
+            } else if (selectedYear !== '2015') {
+                infoHTML += `<br>Change: N/A`;
+            }
+            
             const infoDiv = document.createElement('div');
-            infoDiv.innerHTML = `<strong>${provinceName}</strong><br>FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD`;
+            infoDiv.innerHTML = infoHTML;
             popupContent.appendChild(infoDiv);
             
             const chartContainer = document.createElement('div');
@@ -396,7 +464,6 @@ function updateMap() {
             popupContent.appendChild(chartContainer);
             
             layer.setPopupContent(popupContent);
-            layer.getPopup().options.offset = new L.Point(-100, 0);
             
             if (layer.getPopup().isOpen() && region) {
                 setTimeout(() => {
@@ -446,6 +513,8 @@ fetch('data/extracted_data.csv')
         console.log(`Found ${yearData.length} entries for year ${selectedYear}`);
         
         updateMap();
+        
+        addRegionBorders();
     })
     .catch(error => {
         console.error('Error loading data:', error);
@@ -470,6 +539,13 @@ yearDropdown.addEventListener('change', (event) => {
     
     if (geojsonLayer) {
         map.fitBounds(geojsonLayer.getBounds());
+        
+        if (map.regionLayers) {
+            map.regionLayers.forEach(layer => {
+                map.removeLayer(layer);
+            });
+        }
+        addRegionBorders();
     }
 });
 
