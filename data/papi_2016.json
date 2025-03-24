@@ -1,0 +1,632 @@
+[
+  {
+    "Province": "Ha Noi",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.337698459625244,
+    "Dimension 2: Transparency of Local Decision-making": 5.076180934906006,
+    "Dimension 3: Vertical Accountability": 4.261383533477783,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.2389445304870605,
+    "Dimension 5: Public Administrative Procedures": 7.087233543395996,
+    "Dimension 6: Public Service Delivery": 6.804520130157471
+  },
+  {
+    "Province": "Ha Giang",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.339402198791504,
+    "Dimension 2: Transparency of Local Decision-making": 5.274486064910889,
+    "Dimension 3: Vertical Accountability": 4.403687000274658,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.823135852813721,
+    "Dimension 5: Public Administrative Procedures": 6.63526725769043,
+    "Dimension 6: Public Service Delivery": 6.4813995361328125
+  },
+  {
+    "Province": "Cao Bang",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.207546234130859,
+    "Dimension 2: Transparency of Local Decision-making": 5.499398708343506,
+    "Dimension 3: Vertical Accountability": 4.442169189453125,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.52946138381958,
+    "Dimension 5: Public Administrative Procedures": 7.018959045410156,
+    "Dimension 6: Public Service Delivery": 6.626322269439697
+  },
+  {
+    "Province": "Bac Kan",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.351490020751953,
+    "Dimension 2: Transparency of Local Decision-making": 5.446347236633301,
+    "Dimension 3: Vertical Accountability": 5.05185604095459,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.896995544433594,
+    "Dimension 5: Public Administrative Procedures": 7.186898231506348,
+    "Dimension 6: Public Service Delivery": 6.678396701812744
+  },
+  {
+    "Province": "Tuyen Quang",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.584712982177734,
+    "Dimension 2: Transparency of Local Decision-making": 5.627709865570068,
+    "Dimension 3: Vertical Accountability": 5.016977310180664,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.690064907073975,
+    "Dimension 5: Public Administrative Procedures": 7.377416610717773,
+    "Dimension 6: Public Service Delivery": 7.259056091308594
+  },
+  {
+    "Province": "Lao Cai",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.732814311981201,
+    "Dimension 2: Transparency of Local Decision-making": 5.893988609313965,
+    "Dimension 3: Vertical Accountability": 4.894874095916748,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.335684299468994,
+    "Dimension 5: Public Administrative Procedures": 6.831310272216797,
+    "Dimension 6: Public Service Delivery": 7.0340399742126465
+  },
+  {
+    "Province": "Dien Bien",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.548989772796631,
+    "Dimension 2: Transparency of Local Decision-making": 6.049473285675049,
+    "Dimension 3: Vertical Accountability": 4.755337238311768,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.176406383514404,
+    "Dimension 5: Public Administrative Procedures": 7.126021385192871,
+    "Dimension 6: Public Service Delivery": 6.786068439483643
+  },
+  {
+    "Province": "Lai Chau",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.091068267822266,
+    "Dimension 2: Transparency of Local Decision-making": 5.369130611419678,
+    "Dimension 3: Vertical Accountability": 4.330191135406494,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.395645618438721,
+    "Dimension 5: Public Administrative Procedures": 7.228302478790283,
+    "Dimension 6: Public Service Delivery": 6.461820602416992
+  },
+  {
+    "Province": "Son La",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.482930660247803,
+    "Dimension 2: Transparency of Local Decision-making": 5.477869510650635,
+    "Dimension 3: Vertical Accountability": 4.52793550491333,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.128231525421143,
+    "Dimension 5: Public Administrative Procedures": 7.104684829711914,
+    "Dimension 6: Public Service Delivery": 6.827014446258545
+  },
+  {
+    "Province": "Yen Bai",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.497678279876709,
+    "Dimension 2: Transparency of Local Decision-making": 5.159362316131592,
+    "Dimension 3: Vertical Accountability": 4.873210430145264,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.164548873901367,
+    "Dimension 5: Public Administrative Procedures": 7.300868034362793,
+    "Dimension 6: Public Service Delivery": 6.680031776428223
+  },
+  {
+    "Province": "Hoa Binh",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.701600074768066,
+    "Dimension 2: Transparency of Local Decision-making": 5.955574035644531,
+    "Dimension 3: Vertical Accountability": 5.074183464050293,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.525936126708984,
+    "Dimension 5: Public Administrative Procedures": 7.068399429321289,
+    "Dimension 6: Public Service Delivery": 6.936591148376465
+  },
+  {
+    "Province": "Thai Nguyen",
+    "Year": "2016",
+    "Dimension 1: Participation": 6.178724765777588,
+    "Dimension 2: Transparency of Local Decision-making": 6.229637622833252,
+    "Dimension 3: Vertical Accountability": 5.17373514175415,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.439533710479736,
+    "Dimension 5: Public Administrative Procedures": 6.982999324798584,
+    "Dimension 6: Public Service Delivery": 6.982417106628418
+  },
+  {
+    "Province": "Lang Son",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.086269378662109,
+    "Dimension 2: Transparency of Local Decision-making": 5.168102264404297,
+    "Dimension 3: Vertical Accountability": 4.72373104095459,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.861180782318115,
+    "Dimension 5: Public Administrative Procedures": 6.76207160949707,
+    "Dimension 6: Public Service Delivery": 6.999878406524658
+  },
+  {
+    "Province": "Quang Ninh",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.85904598236084,
+    "Dimension 2: Transparency of Local Decision-making": 4.944759845733643,
+    "Dimension 3: Vertical Accountability": 4.924911975860596,
+    "Dimension 4: Control of Corruption in the Public Sector": 4.887998104095459,
+    "Dimension 5: Public Administrative Procedures": 6.938477516174316,
+    "Dimension 6: Public Service Delivery": 6.4234232902526855
+  },
+  {
+    "Province": "Bac Giang",
+    "Year": "2016",
+    "Dimension 1: Participation": 6.3995184898376465,
+    "Dimension 2: Transparency of Local Decision-making": 6.342477798461914,
+    "Dimension 3: Vertical Accountability": 4.287097930908203,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.457160472869873,
+    "Dimension 5: Public Administrative Procedures": 7.280080318450928,
+    "Dimension 6: Public Service Delivery": 7.00849723815918
+  },
+  {
+    "Province": "Phu Tho",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.611239433288574,
+    "Dimension 2: Transparency of Local Decision-making": 6.477743625640869,
+    "Dimension 3: Vertical Accountability": 5.5914812088012695,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.673460483551025,
+    "Dimension 5: Public Administrative Procedures": 7.363102436065674,
+    "Dimension 6: Public Service Delivery": 6.816059589385986
+  },
+  {
+    "Province": "Vinh Phuc",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.640860080718994,
+    "Dimension 2: Transparency of Local Decision-making": 5.632906913757324,
+    "Dimension 3: Vertical Accountability": 4.172176361083984,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.825032711029053,
+    "Dimension 5: Public Administrative Procedures": 7.155728816986084,
+    "Dimension 6: Public Service Delivery": 6.989587783813477
+  },
+  {
+    "Province": "Bac Ninh",
+    "Year": "2016",
+    "Dimension 1: Participation": 6.7205729484558105,
+    "Dimension 2: Transparency of Local Decision-making": 6.4878668785095215,
+    "Dimension 3: Vertical Accountability": 4.632474422454834,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.7201128005981445,
+    "Dimension 5: Public Administrative Procedures": 7.041414260864258,
+    "Dimension 6: Public Service Delivery": 7.426144123077393
+  },
+  {
+    "Province": "Hai Duong",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.944025039672852,
+    "Dimension 2: Transparency of Local Decision-making": 6.1420769691467285,
+    "Dimension 3: Vertical Accountability": 5.680943489074707,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.183070659637451,
+    "Dimension 5: Public Administrative Procedures": 6.963546276092529,
+    "Dimension 6: Public Service Delivery": 7.115086555480957
+  },
+  {
+    "Province": "Hai Phong",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.92767858505249,
+    "Dimension 2: Transparency of Local Decision-making": 5.410243988037109,
+    "Dimension 3: Vertical Accountability": 5.29659366607666,
+    "Dimension 4: Control of Corruption in the Public Sector": 4.795640468597412,
+    "Dimension 5: Public Administrative Procedures": 7.3031816482543945,
+    "Dimension 6: Public Service Delivery": 7.814067840576172
+  },
+  {
+    "Province": "Hung Yen",
+    "Year": "2016",
+    "Dimension 1: Participation": 6.01600980758667,
+    "Dimension 2: Transparency of Local Decision-making": 5.916751384735107,
+    "Dimension 3: Vertical Accountability": 5.2750115394592285,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.726694583892822,
+    "Dimension 5: Public Administrative Procedures": 7.146149158477783,
+    "Dimension 6: Public Service Delivery": 7.375965118408203
+  },
+  {
+    "Province": "Thai Binh",
+    "Year": "2016",
+    "Dimension 1: Participation": 6.241557598114014,
+    "Dimension 2: Transparency of Local Decision-making": 6.29045295715332,
+    "Dimension 3: Vertical Accountability": 4.42669677734375,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.358981132507324,
+    "Dimension 5: Public Administrative Procedures": 7.01724910736084,
+    "Dimension 6: Public Service Delivery": 7.39119815826416
+  },
+  {
+    "Province": "Ha Nam",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.525537490844727,
+    "Dimension 2: Transparency of Local Decision-making": 5.486037254333496,
+    "Dimension 3: Vertical Accountability": 5.672732353210449,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.122704029083252,
+    "Dimension 5: Public Administrative Procedures": 7.260165214538574,
+    "Dimension 6: Public Service Delivery": 6.944270610809326
+  },
+  {
+    "Province": "Nam Dinh",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.854945182800293,
+    "Dimension 2: Transparency of Local Decision-making": 6.333100318908691,
+    "Dimension 3: Vertical Accountability": 5.903599262237549,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.676273822784424,
+    "Dimension 5: Public Administrative Procedures": 7.096380710601807,
+    "Dimension 6: Public Service Delivery": 6.899773597717285
+  },
+  {
+    "Province": "Ninh Binh",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.834318161010742,
+    "Dimension 2: Transparency of Local Decision-making": 6.341984272003174,
+    "Dimension 3: Vertical Accountability": 4.877089977264404,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.062038898468018,
+    "Dimension 5: Public Administrative Procedures": 6.99850606918335,
+    "Dimension 6: Public Service Delivery": 7.297382831573486
+  },
+  {
+    "Province": "Thanh Hoa",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.472597599029541,
+    "Dimension 2: Transparency of Local Decision-making": 6.015183448791504,
+    "Dimension 3: Vertical Accountability": 4.357538223266602,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.052792072296143,
+    "Dimension 5: Public Administrative Procedures": 7.199746608734131,
+    "Dimension 6: Public Service Delivery": 7.179482460021973
+  },
+  {
+    "Province": "Nghe An",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.88361120223999,
+    "Dimension 2: Transparency of Local Decision-making": 5.343554973602295,
+    "Dimension 3: Vertical Accountability": 4.981080532073975,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.498676776885986,
+    "Dimension 5: Public Administrative Procedures": 7.251430988311768,
+    "Dimension 6: Public Service Delivery": 6.612395763397217
+  },
+  {
+    "Province": "Ha Tinh",
+    "Year": "2016",
+    "Dimension 1: Participation": 6.809286594390869,
+    "Dimension 2: Transparency of Local Decision-making": 6.1388373374938965,
+    "Dimension 3: Vertical Accountability": 4.905706882476807,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.7246479988098145,
+    "Dimension 5: Public Administrative Procedures": 7.514712333679199,
+    "Dimension 6: Public Service Delivery": 7.223264217376709
+  },
+  {
+    "Province": "Quang Binh",
+    "Year": "2016",
+    "Dimension 1: Participation": 6.161474704742432,
+    "Dimension 2: Transparency of Local Decision-making": 6.2724456787109375,
+    "Dimension 3: Vertical Accountability": 4.904478549957275,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.283563137054443,
+    "Dimension 5: Public Administrative Procedures": 7.669573783874512,
+    "Dimension 6: Public Service Delivery": 7.114734172821045
+  },
+  {
+    "Province": "Quang Tri",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.965747833251953,
+    "Dimension 2: Transparency of Local Decision-making": 6.079280853271484,
+    "Dimension 3: Vertical Accountability": 5.481750965118408,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.559639930725098,
+    "Dimension 5: Public Administrative Procedures": 7.108555793762207,
+    "Dimension 6: Public Service Delivery": 6.8698883056640625
+  },
+  {
+    "Province": "Thua Thien-Hue",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.1025590896606445,
+    "Dimension 2: Transparency of Local Decision-making": 5.139710426330566,
+    "Dimension 3: Vertical Accountability": 5.244911193847656,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.614035606384277,
+    "Dimension 5: Public Administrative Procedures": 6.751325607299805,
+    "Dimension 6: Public Service Delivery": 7.485588073730469
+  },
+  {
+    "Province": "Da Nang",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.274888515472412,
+    "Dimension 2: Transparency of Local Decision-making": 6.023873329162598,
+    "Dimension 3: Vertical Accountability": 5.816633701324463,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.100416660308838,
+    "Dimension 5: Public Administrative Procedures": 7.336547374725342,
+    "Dimension 6: Public Service Delivery": 8.027690887451172
+  },
+  {
+    "Province": "Quang Nam",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.911471366882324,
+    "Dimension 2: Transparency of Local Decision-making": 5.436435699462891,
+    "Dimension 3: Vertical Accountability": 5.118536949157715,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.916278839111328,
+    "Dimension 5: Public Administrative Procedures": 6.816836357116699,
+    "Dimension 6: Public Service Delivery": 6.79243803024292
+  },
+  {
+    "Province": "Quang Ngai",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.33603572845459,
+    "Dimension 2: Transparency of Local Decision-making": 5.886714935302734,
+    "Dimension 3: Vertical Accountability": 5.966982841491699,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.742964744567871,
+    "Dimension 5: Public Administrative Procedures": 7.435492992401123,
+    "Dimension 6: Public Service Delivery": 6.422163963317871
+  },
+  {
+    "Province": "Binh Dinh",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.600662708282471,
+    "Dimension 2: Transparency of Local Decision-making": 6.105953693389893,
+    "Dimension 3: Vertical Accountability": 4.929650783538818,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.642337322235107,
+    "Dimension 5: Public Administrative Procedures": 7.013169288635254,
+    "Dimension 6: Public Service Delivery": 7.230228424072266
+  },
+  {
+    "Province": "Phu Yen",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.657105445861816,
+    "Dimension 2: Transparency of Local Decision-making": 5.605433940887451,
+    "Dimension 3: Vertical Accountability": 4.638538837432861,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.107025623321533,
+    "Dimension 5: Public Administrative Procedures": 7.038894176483154,
+    "Dimension 6: Public Service Delivery": 6.692242622375488
+  },
+  {
+    "Province": "Khanh Hoa",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.832271575927734,
+    "Dimension 2: Transparency of Local Decision-making": 4.940207004547119,
+    "Dimension 3: Vertical Accountability": 4.435600280761719,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.994658946990967,
+    "Dimension 5: Public Administrative Procedures": 6.9532976150512695,
+    "Dimension 6: Public Service Delivery": 7.0896735191345215
+  },
+  {
+    "Province": "Ninh Thuan",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.476952075958252,
+    "Dimension 2: Transparency of Local Decision-making": 5.8122029304504395,
+    "Dimension 3: Vertical Accountability": 4.694324016571045,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.497757911682129,
+    "Dimension 5: Public Administrative Procedures": 7.316427230834961,
+    "Dimension 6: Public Service Delivery": 7.424389839172363
+  },
+  {
+    "Province": "Binh Thuan",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.02081298828125,
+    "Dimension 2: Transparency of Local Decision-making": 5.102128982543945,
+    "Dimension 3: Vertical Accountability": 5.200518608093262,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.410276889801025,
+    "Dimension 5: Public Administrative Procedures": 7.071661949157715,
+    "Dimension 6: Public Service Delivery": 6.975566864013672
+  },
+  {
+    "Province": "Kon Tum",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.19038200378418,
+    "Dimension 2: Transparency of Local Decision-making": 5.1539201736450195,
+    "Dimension 3: Vertical Accountability": 5.41447114944458,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.366423606872559,
+    "Dimension 5: Public Administrative Procedures": 6.799055099487305,
+    "Dimension 6: Public Service Delivery": 6.878927707672119
+  },
+  {
+    "Province": "Gia Lai",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.465195178985596,
+    "Dimension 2: Transparency of Local Decision-making": 5.092511177062988,
+    "Dimension 3: Vertical Accountability": 4.85368013381958,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.439744472503662,
+    "Dimension 5: Public Administrative Procedures": 6.958832740783691,
+    "Dimension 6: Public Service Delivery": 6.651062488555908
+  },
+  {
+    "Province": "Dak Lak",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.789893627166748,
+    "Dimension 2: Transparency of Local Decision-making": 5.489861488342285,
+    "Dimension 3: Vertical Accountability": 4.832870960235596,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.597588539123535,
+    "Dimension 5: Public Administrative Procedures": 7.1670613288879395,
+    "Dimension 6: Public Service Delivery": 6.775784969329834
+  },
+  {
+    "Province": "Dak Nong",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.429309368133545,
+    "Dimension 2: Transparency of Local Decision-making": 5.610695838928223,
+    "Dimension 3: Vertical Accountability": 5.205404281616211,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.935463905334473,
+    "Dimension 5: Public Administrative Procedures": 6.776401519775391,
+    "Dimension 6: Public Service Delivery": 6.928323268890381
+  },
+  {
+    "Province": "Lam Dong",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.393431186676025,
+    "Dimension 2: Transparency of Local Decision-making": 5.323150157928467,
+    "Dimension 3: Vertical Accountability": 5.165553569793701,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.495627403259277,
+    "Dimension 5: Public Administrative Procedures": 6.801047325134277,
+    "Dimension 6: Public Service Delivery": 7.0205979347229
+  },
+  {
+    "Province": "Binh Phuoc",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.340886116027832,
+    "Dimension 2: Transparency of Local Decision-making": 5.9410719871521,
+    "Dimension 3: Vertical Accountability": 4.815097332000732,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.491385459899902,
+    "Dimension 5: Public Administrative Procedures": 7.045961856842041,
+    "Dimension 6: Public Service Delivery": 6.895556449890137
+  },
+  {
+    "Province": "Tay Ninh",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.246353626251221,
+    "Dimension 2: Transparency of Local Decision-making": 5.610681533813477,
+    "Dimension 3: Vertical Accountability": 5.334734916687012,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.506800651550293,
+    "Dimension 5: Public Administrative Procedures": 7.000579833984375,
+    "Dimension 6: Public Service Delivery": 7.163252830505371
+  },
+  {
+    "Province": "Binh Duong",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.470521450042725,
+    "Dimension 2: Transparency of Local Decision-making": 5.2781572341918945,
+    "Dimension 3: Vertical Accountability": 4.447088718414307,
+    "Dimension 4: Control of Corruption in the Public Sector": 4.312314987182617,
+    "Dimension 5: Public Administrative Procedures": 6.953767776489258,
+    "Dimension 6: Public Service Delivery": 7.130433082580566
+  },
+  {
+    "Province": "Dong Nai",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.028012752532959,
+    "Dimension 2: Transparency of Local Decision-making": 5.64705228805542,
+    "Dimension 3: Vertical Accountability": 4.242730140686035,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.910248756408691,
+    "Dimension 5: Public Administrative Procedures": 7.1839447021484375,
+    "Dimension 6: Public Service Delivery": 6.849899768829346
+  },
+  {
+    "Province": "Ba Ria-Vung Tau",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.880063533782959,
+    "Dimension 2: Transparency of Local Decision-making": 5.505140781402588,
+    "Dimension 3: Vertical Accountability": 5.65311336517334,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.467273712158203,
+    "Dimension 5: Public Administrative Procedures": 6.975508213043213,
+    "Dimension 6: Public Service Delivery": 7.816867828369141
+  },
+  {
+    "Province": "Ho Chi Minh City",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.699911594390869,
+    "Dimension 2: Transparency of Local Decision-making": 5.752261161804199,
+    "Dimension 3: Vertical Accountability": 4.916783332824707,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.031486511230469,
+    "Dimension 5: Public Administrative Procedures": 6.9959001541137695,
+    "Dimension 6: Public Service Delivery": 7.509967803955078
+  },
+  {
+    "Province": "Long An",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.58568000793457,
+    "Dimension 2: Transparency of Local Decision-making": 5.846705913543701,
+    "Dimension 3: Vertical Accountability": 4.530453205108643,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.559135913848877,
+    "Dimension 5: Public Administrative Procedures": 7.23305082321167,
+    "Dimension 6: Public Service Delivery": 6.951138019561768
+  },
+  {
+    "Province": "Tien Giang",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.06309175491333,
+    "Dimension 2: Transparency of Local Decision-making": 5.8008832931518555,
+    "Dimension 3: Vertical Accountability": 4.938399791717529,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.992666721343994,
+    "Dimension 5: Public Administrative Procedures": 7.251216411590576,
+    "Dimension 6: Public Service Delivery": 6.5153608322143555
+  },
+  {
+    "Province": "Ben Tre",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.1398024559021,
+    "Dimension 2: Transparency of Local Decision-making": 5.775290012359619,
+    "Dimension 3: Vertical Accountability": 5.6834940910339355,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.9773478507995605,
+    "Dimension 5: Public Administrative Procedures": 7.456697463989258,
+    "Dimension 6: Public Service Delivery": 7.333323955535889
+  },
+  {
+    "Province": "Tra Vinh",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.429068088531494,
+    "Dimension 2: Transparency of Local Decision-making": 4.819333076477051,
+    "Dimension 3: Vertical Accountability": 4.413287162780762,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.161190986633301,
+    "Dimension 5: Public Administrative Procedures": 6.959500789642334,
+    "Dimension 6: Public Service Delivery": 6.842145919799805
+  },
+  {
+    "Province": "Vinh Long",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.124631881713867,
+    "Dimension 2: Transparency of Local Decision-making": 5.5286641120910645,
+    "Dimension 3: Vertical Accountability": 4.520628929138184,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.365923881530762,
+    "Dimension 5: Public Administrative Procedures": 7.4276442527771,
+    "Dimension 6: Public Service Delivery": 7.109286308288574
+  },
+  {
+    "Province": "Dong Thap",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.282998561859131,
+    "Dimension 2: Transparency of Local Decision-making": 5.601454257965088,
+    "Dimension 3: Vertical Accountability": 5.4675092697143555,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.770188331604004,
+    "Dimension 5: Public Administrative Procedures": 7.66341495513916,
+    "Dimension 6: Public Service Delivery": 7.090554714202881
+  },
+  {
+    "Province": "An Giang",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.480678081512451,
+    "Dimension 2: Transparency of Local Decision-making": 5.601372241973877,
+    "Dimension 3: Vertical Accountability": 5.0393967628479,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.764217853546143,
+    "Dimension 5: Public Administrative Procedures": 7.207783222198486,
+    "Dimension 6: Public Service Delivery": 7.540432453155518
+  },
+  {
+    "Province": "Kien Giang",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.574040412902832,
+    "Dimension 2: Transparency of Local Decision-making": 5.057424068450928,
+    "Dimension 3: Vertical Accountability": 4.13378381729126,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.655990123748779,
+    "Dimension 5: Public Administrative Procedures": 6.719313621520996,
+    "Dimension 6: Public Service Delivery": 7.0560688972473145
+  },
+  {
+    "Province": "Can Tho",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.793279647827148,
+    "Dimension 2: Transparency of Local Decision-making": 5.940703868865967,
+    "Dimension 3: Vertical Accountability": 5.69118070602417,
+    "Dimension 4: Control of Corruption in the Public Sector": 7.1360626220703125,
+    "Dimension 5: Public Administrative Procedures": 7.406713485717773,
+    "Dimension 6: Public Service Delivery": 7.604185581207275
+  },
+  {
+    "Province": "Hau Giang",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.184700965881348,
+    "Dimension 2: Transparency of Local Decision-making": 4.958837985992432,
+    "Dimension 3: Vertical Accountability": 4.569543361663818,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.399398326873779,
+    "Dimension 5: Public Administrative Procedures": 6.962613582611084,
+    "Dimension 6: Public Service Delivery": 6.555202960968018
+  },
+  {
+    "Province": "Soc Trang",
+    "Year": "2016",
+    "Dimension 1: Participation": 5.044724941253662,
+    "Dimension 2: Transparency of Local Decision-making": 4.821594715118408,
+    "Dimension 3: Vertical Accountability": 5.213624000549316,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.754441261291504,
+    "Dimension 5: Public Administrative Procedures": 7.434505939483643,
+    "Dimension 6: Public Service Delivery": 7.210567951202393
+  },
+  {
+    "Province": "Bac Lieu",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.804977893829346,
+    "Dimension 2: Transparency of Local Decision-making": 4.811347484588623,
+    "Dimension 3: Vertical Accountability": 4.564178943634033,
+    "Dimension 4: Control of Corruption in the Public Sector": 5.383426189422607,
+    "Dimension 5: Public Administrative Procedures": 6.815893173217773,
+    "Dimension 6: Public Service Delivery": 6.959181785583496
+  },
+  {
+    "Province": "Ca Mau",
+    "Year": "2016",
+    "Dimension 1: Participation": 4.605517387390137,
+    "Dimension 2: Transparency of Local Decision-making": 4.812243938446045,
+    "Dimension 3: Vertical Accountability": 5.109731674194336,
+    "Dimension 4: Control of Corruption in the Public Sector": 6.118039131164551,
+    "Dimension 5: Public Administrative Procedures": 7.010570526123047,
+    "Dimension 6: Public Service Delivery": 6.566606521606445
+  }
+]

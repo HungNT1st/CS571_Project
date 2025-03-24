@@ -272,3 +272,60 @@ h2 {
     font-size: 14px;
     font-weight: bold;
 }
+
+/* PAPI-FDI Scatter Plot Styles */
+#papi-fdi-container {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.scatter-plot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+    max-width: 1200px;
+    width: 95%;
+}
+
+.scatter-plot {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+    height: 300px;
+}
+
+.scatter-point {
+    fill: #2a9d8f;
+    stroke: #264653;
+    stroke-width: 1;
+    opacity: 0.8;
+    transition: opacity 0.3s, r 0.3s;
+}
+
+.scatter-point:hover {
+    opacity: 1;
+    r: 6;
+}
+
+.best-fit-line {
+    stroke: #e76f51;
+    stroke-width: 2;
+    stroke-dasharray: 3,3;
+}
+
+.tooltip-scatter {
+    position: absolute;
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    pointer-events: none;
+    font-size: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
