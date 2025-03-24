@@ -345,7 +345,25 @@ function resetHighlight(e) {
     e.target.closeTooltip();
 }
 
-function getFDIForProvince(provinceName) {
+// Function to find min and max values for FDI across all years
+function getFDIRange() {
+    let min = Infinity;
+    let max = -Infinity;
+    
+    fdiData.forEach(entry => {
+        if (entry.FDI !== undefined && entry.FDI !== null) {
+            const value = parseFloat(entry.FDI);
+            if (!isNaN(value)) {
+                min = Math.min(min, value);
+                max = Math.max(max, value);
+            }
+        }
+    });
+    
+    return { min, max };
+}
+
+function getFDIForProvince(provinceName, normalized = false) {
     if (!selectedYear) return null;
     
     const provinceData = fdiData.find(d => 
@@ -353,7 +371,16 @@ function getFDIForProvince(provinceName) {
         d.Year === selectedYear.toString()
     );
     
-    return provinceData ? parseFloat(provinceData.FDI) : null;
+    if (!provinceData) return null;
+    
+    const value = parseFloat(provinceData.FDI);
+    
+    if (!normalized) {
+        return value; 
+    }
+    
+    const range = getFDIRange();
+    return normalizeValue(value, range.min, range.max);
 }
 
 function getPercentageChange(provinceName) {
@@ -757,12 +784,9 @@ function addLegend() {
 
 addLegend();
 
-// PAPI Data Processing Functions
 function loadPAPIData() {
-    // Load PAPI data from the JSON files we created
     const years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'];
     
-    // Fetch the PAPI data for each year
     const promises = years.map(year => {
         return fetch(`data/papi_${year}.json`)
             .then(response => {
@@ -780,12 +804,9 @@ function loadPAPIData() {
     
     return Promise.all(promises)
         .then(yearlyData => {
-            // Combine all yearly data
             let combinedData = [];
             yearlyData.forEach(data => {
-                // Filter out invalid entries (header rows, metadata, etc.)
                 const validData = data.filter(entry => {
-                    // Check if the province name is a valid province
                     const allProvinces = [];
                     Object.values(vietnamRegionsEnglish).forEach(provinces => {
                         allProvinces.push(...provinces);
@@ -804,7 +825,6 @@ function loadPAPIData() {
             papiData = combinedData;
             console.log('PAPI data loaded:', papiData.length, 'entries');
             
-            // Create the initial PAPI-FDI scatter plots
             if (selectedYear) {
                 createPAPIFDIScatterPlots();
             }
@@ -814,35 +834,26 @@ function loadPAPIData() {
 }
 
 function simulatePAPIData(year) {
-    // This function creates simulated PAPI data for demonstration purposes
-    // In a real implementation, this would be replaced with actual data loading
-    
     const provinces = [];
     
-    // Collect all province names from the Vietnam regions
     Object.values(vietnamRegionsEnglish).forEach(regionProvinces => {
         provinces.push(...regionProvinces);
     });
     
-    // Create simulated data for each province
     return provinces.map(province => {
         const data = {
             Province: province,
             Year: year
         };
         
-        // Add simulated values for each PAPI dimension
         papiDimensions.forEach(dimension => {
-            // Generate a random score between 1 and 10
             const baseScore = 5 + Math.random() * 5;
             
-            // Add some consistency based on province and year
             const provinceEffect = province.charCodeAt(0) % 3 - 1;
             const yearEffect = (parseInt(year) - 2015) * 0.1;
             
             let score = baseScore + provinceEffect + yearEffect;
             
-            // Ensure score is between 1 and 10
             score = Math.max(1, Math.min(10, score));
             
             data[dimension] = parseFloat(score.toFixed(2));
@@ -850,6 +861,28 @@ function simulatePAPIData(year) {
         
         return data;
     });
+}
+
+function getPAPIDimensionRange(dimension) {
+    let min = Infinity;
+    let max = -Infinity;
+    
+    papiData.forEach(entry => {
+        if (entry[dimension] !== undefined && entry[dimension] !== null) {
+            const value = parseFloat(entry[dimension]);
+            if (!isNaN(value)) {
+                min = Math.min(min, value);
+                max = Math.max(max, value);
+            }
+        }
+    });
+    
+    return { min, max };
+}
+
+function normalizeValue(value, min, max) {
+    if (min === max) return 50; 
+    return ((value - min) / (max - min)) * 100;
 }
 
 function getPAPIForProvince(provinceName, dimension) {
@@ -862,13 +895,13 @@ function getPAPIForProvince(provinceName, dimension) {
     
     if (!provinceData || !provinceData[dimension]) return null;
     
-    return parseFloat(provinceData[dimension]);
+    const value = parseFloat(provinceData[dimension]);
+    
+    const range = getPAPIDimensionRange(dimension);
+    return normalizeValue(value, range.min, range.max);
 }
 
 function calculateLinearRegression(data) {
-    // Calculate the linear regression (line of best fit) for the data
-    // Returns slope and intercept for the line y = mx + b
-    
     if (data.length < 2) return { slope: 0, intercept: 0 };
     
     let sumX = 0;
@@ -917,26 +950,23 @@ function createPAPIFDIScatterPlot(container, dimension) {
         .attr("text-anchor", "middle")
         .style("font-size", "14px")
         .text(dimension);
-    
-    // Collect data points
     const data = [];
     
-    // Collect all province names from the Vietnam regions
     const provinces = [];
     Object.values(vietnamRegionsEnglish).forEach(regionProvinces => {
         provinces.push(...regionProvinces);
     });
     
-    // Get PAPI and FDI data for each province
     provinces.forEach(province => {
         const papi = getPAPIForProvince(province, dimension);
-        const fdi = getFDIForProvince(province);
+        const fdi = getFDIForProvince(province, true); 
         
         if (papi !== null && fdi !== null) {
             data.push({
                 province: province,
                 x: papi,
-                y: fdi
+                y: fdi,
+                rawFdi: getFDIForProvince(province) 
             });
         }
     });
@@ -951,13 +981,12 @@ function createPAPIFDIScatterPlot(container, dimension) {
         return;
     }
     
-    // Create scales
     const x = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.x) * 1.1])
+        .domain([0, 100])
         .range([0, width]);
-    
+
     const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.y) * 1.1])
+        .domain([0, 100])
         .range([height, 0]);
     
     // Add axes
@@ -981,7 +1010,7 @@ function createPAPIFDIScatterPlot(container, dimension) {
         .attr("y", height + 40)
         .attr("text-anchor", "middle")
         .style("font-size", "12px")
-        .text("PAPI Score");
+        .text("Normalized PAPI Score (0-100)");
     
     svg.append("text")
         .attr("class", "axis-label")
@@ -990,9 +1019,8 @@ function createPAPIFDIScatterPlot(container, dimension) {
         .attr("y", -40)
         .attr("text-anchor", "middle")
         .style("font-size", "12px")
-        .text("FDI (million USD)");
+        .text("Normalized FDI Score (0-100)");
     
-    // Calculate linear regression
     const regression = calculateLinearRegression(data);
     
     // Add line of best fit
@@ -1032,7 +1060,7 @@ function createPAPIFDIScatterPlot(container, dimension) {
             .duration(200)
             .style("opacity", .9);
         
-        tooltip.html(`<strong>${d.province}</strong><br>PAPI: ${d.x.toFixed(2)}<br>FDI: ${d.y.toLocaleString()} million USD`)
+        tooltip.html(`<strong>${d.province}</strong><br>Normalized PAPI: ${d.x.toFixed(2)}<br>Normalized FDI: ${d.y.toFixed(2)}<br>Raw FDI: ${d.rawFdi.toLocaleString()} million USD`)
             .style("left", (event.pageX + 10) + "px")
             .style("top", (event.pageY - 28) + "px");
     })
@@ -1044,7 +1072,6 @@ function createPAPIFDIScatterPlot(container, dimension) {
             .style("opacity", 0);
     });
     
-    // Add equation of line
     svg.append("text")
         .attr("class", "regression-equation")
         .attr("x", width - 20)
@@ -1058,7 +1085,6 @@ function createPAPIFDIScatterPlots() {
     const container = document.querySelector('.scatter-plot-grid');
     container.innerHTML = '';
     
-    // Create a container for each dimension
     papiDimensions.forEach(dimension => {
         const plotContainer = document.createElement('div');
         plotContainer.className = 'scatter-plot';
@@ -1069,7 +1095,6 @@ function createPAPIFDIScatterPlots() {
     });
 }
 
-// Update the year change event to also update the PAPI-FDI scatter plots
 yearDropdown.addEventListener('change', (event) => {
     selectedYear = event.target.value;
     console.log(`Year ${selectedYear} selected`);
@@ -1092,11 +1117,9 @@ yearDropdown.addEventListener('change', (event) => {
     
     updateLineChartHighlight();
     
-    // Update PAPI-FDI scatter plots
     createPAPIFDIScatterPlots();
 });
 
-// Load PAPI data after FDI data is loaded
 fetch('data/extracted_data.csv')
     .then(response => response.text())
     .then(csvText => {
@@ -1118,7 +1141,6 @@ fetch('data/extracted_data.csv')
         
         calculateNationalFDI();
         
-        // Load PAPI data
         return loadPAPIData();
     })
     .then(() => {
@@ -1145,14 +1167,12 @@ fetch('data/extracted_data.csv')
         
         addRegionBorders();
         
-        // Create initial PAPI-FDI scatter plots
         createPAPIFDIScatterPlots();
     })
     .catch(error => {
         console.error('Error loading data:', error);
     });
 
-// Update window resize handler to also update PAPI-FDI scatter plots
 window.addEventListener('resize', () => {
     map.invalidateSize();
     
@@ -1160,7 +1180,5 @@ window.addEventListener('resize', () => {
         createNationalFDIChart();
         updateLineChartHighlight();
     }
-    
-    // Update PAPI-FDI scatter plots
     createPAPIFDIScatterPlots();
 });
