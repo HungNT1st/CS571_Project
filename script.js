@@ -363,25 +363,56 @@ function getFDIRange() {
     return { min, max };
 }
 
+// function getFDIForProvince(provinceName, normalized = false) {
+//     if (!selectedYear) return null;
+    
+//     const provinceData = fdiData.find(d => 
+//         d.Province.trim() === provinceName.trim() && 
+//         d.Year === selectedYear.toString()
+//     );
+    
+//     if (!provinceData) return null;
+    
+//     const value = parseFloat(provinceData.FDI);
+    
+//     if (!normalized) {
+//         return value; 
+//     }
+    
+//     const range = getFDIRange();
+//     return normalizeValue(value, range.min, range.max);
+// }
+
 function getFDIForProvince(provinceName, normalized = false) {
     if (!selectedYear) return null;
     
     const provinceData = fdiData.find(d => 
-        d.Province.trim() === provinceName.trim() && 
-        d.Year === selectedYear.toString()
+      d.Province.trim() === provinceName.trim() && 
+      d.Year === selectedYear.toString()
     );
     
     if (!provinceData) return null;
     
     const value = parseFloat(provinceData.FDI);
+    const logValue = value > 0 ? Math.log(value) : 0;
     
     if (!normalized) {
-        return value; 
+      return logValue;
     }
     
-    const range = getFDIRange();
-    return normalizeValue(value, range.min, range.max);
-}
+    let min = Infinity, max = -Infinity;
+    fdiData.forEach(entry => {
+      if (entry.FDI !== undefined && entry.FDI !== null) {
+        const v = parseFloat(entry.FDI);
+        const lv = v > 0 ? Math.log(v) : 0;
+        min = Math.min(min, lv);
+        max = Math.max(max, lv);
+      }
+    });
+    
+    return normalizeValue(logValue, min, max);
+  }
+  
 
 function getPercentageChange(provinceName) {
     if (!selectedYear || selectedYear === '2015') {
@@ -928,6 +959,26 @@ function calculateLinearRegression(data) {
     return { slope, intercept };
 }
 
+function calculateRSquared(data, slope, intercept) {
+    if (data.length < 2) return 0;
+    let sumY = 0;
+    data.forEach(d => {
+      sumY += d.y;
+    });
+    const meanY = sumY / data.length;
+    
+    let ssTot = 0;
+    let ssRes = 0;
+    data.forEach(d => {
+      const predictedY = slope * d.x + intercept;
+      ssRes += Math.pow(d.y - predictedY, 2);
+      ssTot += Math.pow(d.y - meanY, 2);
+    });
+    
+    return ssTot === 0 ? 1 : 1 - (ssRes / ssTot);
+  }
+  
+
 function createPAPIFDIScatterPlot(container, dimension) {
     d3.select(container).html("");
     
@@ -1022,6 +1073,14 @@ function createPAPIFDIScatterPlot(container, dimension) {
         .text("Normalized FDI Score (0-100)");
     
     const regression = calculateLinearRegression(data);
+    const rSquared = calculateRSquared(data, regression.slope, regression.intercept);
+
+    svg.append("text")
+        .attr("class", "r-squared")
+        .attr("x", 20)
+        .attr("y", 20)
+        .style("font-size", "10px")
+        .text(`R² = ${rSquared.toFixed(2)}`);
     
     // Add line of best fit
     const lineData = [
