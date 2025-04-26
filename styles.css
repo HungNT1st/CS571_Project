@@ -333,6 +333,46 @@ h2 {
     justify-content: center;
 }
 
+/* Neon marquee animation for dimension labels */
+.dimension-name {
+    overflow: hidden;
+    position: relative;
+    margin: 10px 0;
+}
+
+.dimension-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 15s linear infinite;
+    text-shadow: 0 0 5px #0ff,
+                 0 0 10px #0ff,
+                 0 0 20px #0ff,
+                 0 0 40px #0ff;
+    color: #fff;
+    padding: 5px 0;
+    position: relative;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    50% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Pause animation on hover */
+.dimension-name:hover .dimension-text {
+    animation-play-state: paused;
+    text-shadow: 0 0 10px #ff00ff,
+                 0 0 20px #ff00ff,
+                 0 0 30px #ff00ff;
+}
+
 .scatter-plot-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

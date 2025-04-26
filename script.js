@@ -991,13 +991,14 @@ function createPAPIFDIScatterPlot(container, dimension) {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
     
-    // Add title
+    // Add title with marquee effect
     svg.append("text")
-        .attr("class", "chart-title")
+        .attr("class", "dimension-text")
         .attr("x", width / 2)
         .attr("y", -20)
         .attr("text-anchor", "middle")
         .style("font-size", "14px")
+        .style("pointer-events", "none")
         .text(dimension);
     const data = [];
     
