@@ -298,41 +298,36 @@ function highlightFeature(e) {
     
     const provinceName = layer.feature.properties.Name;
     const region = findRegionForProvince(provinceName);
+    const fdi = getFDIForProvince(provinceName);
+    const percentChange = getPercentageChange(provinceName);
     
+    // Create tooltip element
+    const tooltip = document.getElementById('map-tooltip');
+    if (!tooltip) {
+        const newTooltip = document.createElement('div');
+        newTooltip.id = 'map-tooltip';
+        document.body.appendChild(newTooltip);
+    }
+    
+    const tt = document.getElementById('map-tooltip');
+    tt.innerHTML = `<div class="tooltip-content">
+        <strong>${provinceName}</strong><br>
+        FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD
+        ${percentChange !== null ? `<br><span style="color:${percentChange >= 0 ? 'green' : 'red'}">
+            Change: ${percentChange >= 0 ? '↑' : '↓'} ${Math.abs(percentChange).toFixed(2)}%
+        </span>` : ''}
+    </div>`;
+    
+    // Position tooltip relative to mouse
+    tt.style.display = 'block';
+    tt.style.left = `${e.originalEvent.pageX + 15}px`;
+    tt.style.top = `${e.originalEvent.pageY - 30}px`;
+    
+    // Only create chart container if region exists
     if (region) {
-        const popupContent = document.createElement('div');
-        popupContent.className = 'popup-content';
-        
-        const fdi = getFDIForProvince(provinceName);
-        const percentChange = getPercentageChange(provinceName);
-        
-        let infoHTML = `<strong>${provinceName}</strong><br>FDI: ${fdi !== null ? fdi.toLocaleString() : 'N/A'} million USD`;
-        
-        if (percentChange !== null) {
-            const changeSymbol = percentChange >= 0 ? '↑' : '↓';
-            const changeColor = percentChange >= 0 ? 'green' : 'red';
-            infoHTML += `<br><span style="color:${changeColor}">Change: ${changeSymbol} ${Math.abs(percentChange).toFixed(2)}%</span>`;
-        } else if (selectedYear !== '2015') {
-            infoHTML += `<br>Change: N/A`;
-        }
-        
-        const infoDiv = document.createElement('div');
-        infoDiv.innerHTML = infoHTML;
-        popupContent.appendChild(infoDiv);
-        
         const chartContainer = document.createElement('div');
         chartContainer.className = 'chart-container';
-        popupContent.appendChild(chartContainer);
-        
-        if (layer._popup) {
-            layer.unbindPopup();
-        }
-        
-        layer.bindPopup(popupContent, {
-            className: 'custom-popup',
-            maxWidth: 400
-        }).openPopup();
-        
+        tt.appendChild(chartContainer);
         setTimeout(() => {
             createRegionalBarChart(chartContainer, region, provinceName);
         }, 10);
@@ -341,8 +336,11 @@ function highlightFeature(e) {
 
 function resetHighlight(e) {
     geojsonLayer.resetStyle(e.target);
-    e.target.closePopup();
-    e.target.closeTooltip();
+    const tooltip = document.getElementById('map-tooltip');
+    if (tooltip) {
+        tooltip.style.display = 'none';
+        tooltip.innerHTML = '';
+    }
 }
 
 // Function to find min and max values for FDI across all years
