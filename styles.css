@@ -13,7 +13,7 @@ body {
 .tutorial-section {
     margin: 20px;
     padding: 25px;
-    background-color: #fff3cd; /* Temporary highlight color */
+    background-color: #fff3cd; 
     border-radius: 8px;
     border: 1px solid #ffeeba;
 }
@@ -35,7 +35,7 @@ body {
 .overview-section {
     margin: 20px;
     padding: 25px;
-    background-color: #d4edda; /* Temporary highlight color */
+    background-color: #d4edda; 
     border-radius: 8px;
     border: 1px solid #c3e6cb;
 }
@@ -196,7 +196,7 @@ h2 {
     font-weight: bold;
     text-align: center;
     margin-bottom: 8px;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .bar {
@@ -421,3 +421,31 @@ h2 {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     z-index: 1000;
 }
+
+
+
+/* --- Year‑pagination --- */
+.year-pagination {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .year-btn {
+    padding: 10px 16px;
+    font-size: 16px;
+    border: 2px solid #2a9d8f;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .year-btn:hover,
+  .year-btn.active {
+    background: #2a9d8f;
+    color: #fff;
+  }
+  
+  .left-panel { display:none; }
