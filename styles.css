@@ -9,6 +9,37 @@ body {
     line-height: 1.6;
 }
 
+/* Tutorial Section Styles */
+.tutorial-section {
+    margin: 20px;
+    padding: 25px;
+    background-color: #fff3cd; /* Temporary highlight color */
+    border-radius: 8px;
+    border: 1px solid #ffeeba;
+}
+
+.explanation-box, .usage-guide {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.temp-content {
+    color: #666;
+    font-style: italic;
+}
+
+/* Overview Section Styles */
+.overview-section {
+    margin: 20px;
+    padding: 25px;
+    background-color: #d4edda; /* Temporary highlight color */
+    border-radius: 8px;
+    border: 1px solid #c3e6cb;
+}
+
 .container {
     display: flex;
     height: 80vh;
