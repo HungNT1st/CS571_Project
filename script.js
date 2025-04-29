@@ -7,6 +7,7 @@ let nationalFdiData = [];
 
 let geojsonLayer;
 let selectedYear = null;
+let regionHighlightLayer = null;
 
 const years = Array.from({ length: 2024 - 2015 + 1 }, (_, i) => (2015 + i).toString());
 
@@ -234,6 +235,32 @@ function highlightFeature(e) {
   const region       = findRegionForProvince(provinceName);
   const fdi          = getFDIForProvince(provinceName);
   const pctChange    = getPercentageChange(provinceName);
+
+  if (region) {
+    const regionFeatures = [];
+    geojsonLayer.eachLayer(l => {
+      if (vietnamRegionsEnglish[region].includes(l.feature.properties.Name)) {
+        regionFeatures.push(l.feature);
+      }
+    });
+
+    if (regionHighlightLayer) {
+      map.removeLayer(regionHighlightLayer);
+      regionHighlightLayer = null;
+    }
+
+    regionHighlightLayer = L.geoJSON(
+      { type: "FeatureCollection", features: regionFeatures },
+      {
+        style: {
+          color : "#e76f51",       
+          weight: 1.5,
+          fill  : false
+        },
+        interactive: false         
+      }
+    ).addTo(map);
+  }
 
   let tooltip = document.getElementById("map-tooltip");
   if (!tooltip) {
@@ -904,4 +931,3 @@ function addLegend() {
   
     legend.addTo(map);
   }
-  
