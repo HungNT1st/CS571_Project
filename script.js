@@ -166,6 +166,7 @@ function getColor(fdi) {
 
   if (fdi === 0 || fdi < 1) return "#ffe6e6";           
 
+  // const positiveGrades = [1, 10, 50, 100, 200, 500, 1000, 2000, 3000];
   return fdi > 3000 ? "#004d00" :
          fdi > 2000 ? "#006600" :
          fdi > 1000 ? "#008800" :
@@ -178,7 +179,7 @@ function getColor(fdi) {
 
 function style(feature) {
   const provinceName = feature.properties.Name;
-  const fdi          = getFDIForProvince(provinceName);
+  const fdi          = getFDIForProvinceNormal(provinceName);
   return {
     fillColor   : getColor(fdi),
     weight      : 1,
@@ -233,7 +234,7 @@ function highlightFeature(e) {
 
   const provinceName = layer.feature.properties.Name;
   const region       = findRegionForProvince(provinceName);
-  const fdi          = getFDIForProvince(provinceName);
+  const fdi          = getFDIForProvinceNormal(provinceName);
   const pctChange    = getPercentageChange(provinceName);
 
   if (region) {
@@ -298,7 +299,7 @@ function resetHighlight(e) {
 function onEachFeature(feature, layer) {
   const provinceName = feature.properties.Name;
   const region       = findRegionForProvince(provinceName);
-  const fdi          = getFDIForProvince(provinceName);
+  const fdi          = getFDIForProvinceNormal(provinceName);
   const pctChange    = getPercentageChange(provinceName);
 
   if (!region) {
@@ -369,10 +370,27 @@ function getFDIForProvince(provinceName, normalized = false) {
   return normalizeValue(logValue, min, max);
 }
 
+function getFDIForProvinceNormal(provinceName) {
+  if (!selectedYear) return null;
+
+  const currentEntry = fdiData.find(d =>
+    d.Province.trim() === provinceName.trim() &&
+    d.Year            === selectedYear.toString()
+  );
+  const current = parseFloat(currentEntry.FDI);
+  if (current === null) return null;
+  return current;
+}
+
 function getPercentageChange(provinceName) {
   if (!selectedYear || selectedYear === "2015") return 0;
 
-  const current = getFDIForProvince(provinceName);
+  const current = getFDIForProvinceNormal(provinceName);
+  // const currentEntry = fdiData.find(d =>
+  //   d.Province.trim() === provinceName.trim() &&
+  //   d.Year            === selectedYear.toString()
+  // );
+  // const current = parseFloat(currentEntry.FDI);
   if (current === null) return null;
 
   const prevEntry = fdiData.find(d =>
@@ -397,7 +415,7 @@ function updateMap() {
     layer.setStyle(style(layer.feature));
 
     const provinceName = layer.feature.properties.Name;
-    const fdi          = getFDIForProvince(provinceName);
+    const fdi          = getFDIForProvinceNormal(provinceName);
     const pctChange    = getPercentageChange(provinceName);
     const region       = findRegionForProvince(provinceName);
 
@@ -903,6 +921,7 @@ function addLegend() {
   
       const negativeGrades = [-100, -50, -10, 0];
       const positiveGrades = [1, 10, 50, 100, 200, 500, 1000, 2000, 3000];
+      // const positiveGrades = [0, 5, 15, 30, 50, 100, 200, 500, 1000];
   
       const labels = ["<strong>FDI (million USD)</strong>"];
   
