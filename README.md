@@ -8,3 +8,7 @@
 5. Select "Open with Live Server" from the context menu
 
 The visualization will automatically open in your default browser at `http://127.0.0.1:5500/index.html`
+
+
+## Link to Screencast Video
+[![Screencast Video](https://img.youtube.com/vi/Yzaq9hRF-lc/0.jpg)](https://www.youtube.com/embed/Yzaq9hRF-lc)
