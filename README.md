@@ -12,3 +12,6 @@ The visualization will automatically open in your default browser at `http://127
 
 ## Link to Screencast Video
 [![Screencast Video](https://img.youtube.com/vi/Yzaq9hRF-lc/0.jpg)](https://www.youtube.com/embed/Yzaq9hRF-lc)
+
+## GitHub Page
+You can also view the project hosted on GitHub Pages: [CS571_Project](https://hungnt1st.github.io/CS571_Project/)
